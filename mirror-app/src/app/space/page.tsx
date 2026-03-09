@@ -1,5 +1,6 @@
 import Constellation from '@/components/Constellation';
 import FocusMode from '@/components/FocusMode';
+import OrbitLegend from '@/components/OrbitLegend';
 import Link from 'next/link';
 
 export default function SpaceOfVariations() {
@@ -7,18 +8,22 @@ export default function SpaceOfVariations() {
         <main className="relative w-full h-screen overflow-hidden bg-black text-white">
             <Constellation />
             <FocusMode />
+            <OrbitLegend />
 
-            {/* Title/Header inside Space */}
+            {/* Minimal header */}
             <div className="absolute top-8 left-8 z-40 pointer-events-none fade-in">
-                <h1 className="text-sm tracking-[0.3em] uppercase text-white/40">Space of Variations</h1>
-                <p className="text-xs text-white/20 mt-1 font-light">Select a sector to tune your frequency</p>
+                <p className="text-[10px] tracking-[0.4em] uppercase text-white/20">Space of Variations</p>
+                <p className="text-[9px] text-white/12 mt-1 tracking-wider" style={{ color: 'rgba(255,255,255,0.1)' }}>
+                    Select an orbit node to enter
+                </p>
             </div>
 
+            {/* Dashboard link */}
             <Link
                 href="/dashboard"
-                className="absolute bottom-12 left-1/2 -translate-x-1/2 z-40 px-6 py-2 border border-white/20 rounded-full text-xs uppercase tracking-widest bg-black/50 backdrop-blur-md hover:bg-white hover:text-black transition-colors"
+                className="absolute bottom-10 left-1/2 -translate-x-1/2 z-40 px-7 py-2.5 border border-white/12 rounded-full text-[10px] uppercase tracking-[0.25em] bg-black/40 backdrop-blur-md hover:bg-white hover:text-black transition-all text-white/40 hover:text-black"
             >
-                Enter Practitioner Dashboard
+                Practitioner Dashboard
             </Link>
         </main>
     );

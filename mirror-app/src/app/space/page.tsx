@@ -1,9 +1,15 @@
+"use client";
+
 import Constellation from '@/components/Constellation';
 import FocusMode from '@/components/FocusMode';
 import OrbitLegend from '@/components/OrbitLegend';
 import Link from 'next/link';
+import { useAppStore } from '@/lib/store';
 
 export default function SpaceOfVariations() {
+    const { isPremium, visitedChapterIds } = useAppStore();
+    const visitedCount = visitedChapterIds.size;
+
     return (
         <main className="relative w-full h-screen overflow-hidden bg-black text-white">
             <Constellation />
@@ -17,6 +23,15 @@ export default function SpaceOfVariations() {
                     Select an orbit node to enter
                 </p>
             </div>
+
+            {/* Progress HUD */}
+            {isPremium && visitedCount > 0 && (
+                <div className="absolute bottom-10 left-8 z-40 pointer-events-none">
+                    <p className="text-[9px] uppercase tracking-[0.3em] text-amber-400/60">
+                        {visitedCount} / 19 sectors entered
+                    </p>
+                </div>
+            )}
 
             {/* Dashboard link */}
             <Link

@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter, Cormorant_Garamond, DM_Sans } from 'next/font/google';
+import Script from 'next/script';
+import AppInitializer from '@/components/AppInitializer';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
@@ -29,8 +31,25 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en" className="dark">
-            <body className={`${inter.variable} ${cormorant.variable} ${dmSans.variable} font-dm-sans antialiased overflow-x-hidden`}>
+            <body className={`${inter.variable} ${cormorant.variable} ${dmSans.variable} antialiased overflow-x-hidden`}
+                style={{ fontFamily: 'var(--font-dm-sans), DM Sans, system-ui, sans-serif' }}
+            >
+                <AppInitializer />
                 {children}
+
+                {/* Ko-fi floating donation widget */}
+                <Script
+                    src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"
+                    strategy="lazyOnload"
+                />
+                <Script id="kofi-widget" strategy="lazyOnload">{`
+                    kofiWidgetOverlay.draw('transurfingmirror', {
+                        'type': 'floating-chat',
+                        'floating-chat.donateButton.text': 'Support',
+                        'floating-chat.donateButton.background-color': '#111111',
+                        'floating-chat.donateButton.text-color': '#ffffff'
+                    });
+                `}</Script>
             </body>
         </html>
     );

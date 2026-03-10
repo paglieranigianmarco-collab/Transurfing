@@ -67,7 +67,7 @@ function createAmbientDrone(): AudioDrone {
     return { ctx, gainNode, oscs };
 }
 
-export default function SlideProjector({ isPremium }: { isPremium: boolean }) {
+export default function SlideProjector({ isPremium, onRequestUpgrade }: { isPremium: boolean; onRequestUpgrade?: () => void }) {
     const [slideText, setSlideText] = useState('');
     const [slideImage, setSlideImage] = useState<string | null>(null);
     const [zenMode, setZenMode] = useState(false);
@@ -122,7 +122,7 @@ export default function SlideProjector({ isPremium }: { isPremium: boolean }) {
                 <p className="text-zinc-600 font-light text-center max-w-sm mb-6 text-sm leading-relaxed">
                     Access the Zen Mode projection chamber to tune your frequency to your Target Slide. Includes 432Hz ambient drone.
                 </p>
-                <button className="px-6 py-2 border border-white/15 rounded-full text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-colors text-white/40">
+                <button onClick={onRequestUpgrade} className="px-6 py-2 border border-white/15 rounded-full text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-colors text-white/40">
                     Unlock Feature
                 </button>
             </div>

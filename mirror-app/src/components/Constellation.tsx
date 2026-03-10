@@ -71,6 +71,7 @@ function ChapterNode({
     tierGlow,
     onClick,
     isSelected,
+    isVisited,
 }: {
     chapter: Chapter;
     position: [number, number, number];
@@ -79,7 +80,10 @@ function ChapterNode({
     tierGlow: string;
     onClick: () => void;
     isSelected: boolean;
+    isVisited: boolean;
 }) {
+    const nodeColor = isVisited ? '#D4AF37' : tierColor;
+    const nodeEmissive = isVisited ? '#8b6914' : tierEmissive;
     const meshRef = useRef<THREE.Mesh>(null);
     const glowRef = useRef<THREE.Mesh>(null);
     const [hovered, setHovered] = useState(false);
@@ -123,9 +127,9 @@ function ChapterNode({
             >
                 <sphereGeometry args={[0.18, 32, 32]} />
                 <meshStandardMaterial
-                    color={hovered || isSelected ? '#ffffff' : tierColor}
-                    emissive={tierEmissive}
-                    emissiveIntensity={isSelected ? 3 : hovered ? 2 : 0.8}
+                    color={hovered || isSelected ? '#ffffff' : nodeColor}
+                    emissive={nodeEmissive}
+                    emissiveIntensity={isSelected ? 3 : hovered ? 2 : isVisited ? 1.4 : 0.8}
                     roughness={0.1}
                     metalness={0.9}
                 />
@@ -254,7 +258,7 @@ function StarParallax() {
 
 // ── Main scene ───────────────────────────────────────────────────────
 function Scene() {
-    const { setSelectedChapter, setFocusMode, isFocusMode, orbitFilter, setFlyTarget, selectedChapter } = useAppStore();
+    const { setSelectedChapter, setFocusMode, isFocusMode, orbitFilter, setFlyTarget, selectedChapter, visitedChapterIds } = useAppStore();
     const grouped = useMemo(() => groupByTier(chapters), []);
     const orbitControlsRef = useRef<any>(null);
 
@@ -295,6 +299,7 @@ function Scene() {
                                     tierEmissive={cfg.emissive}
                                     tierGlow={cfg.glowColor}
                                     isSelected={isSelected}
+                                    isVisited={visitedChapterIds.has(chapter.id)}
                                     onClick={() => {
                                         // Compute approximate world position for camera fly
                                         const worldVec = new THREE.Vector3(...localPos)

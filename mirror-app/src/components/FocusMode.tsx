@@ -1,8 +1,10 @@
 "use client";
 
+import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppStore } from '@/lib/store';
 import { renderWithGlossaryTooltips } from '@/lib/parseGlossary';
+import { writeVisitedChapter } from '@/lib/premium';
 import { X } from 'lucide-react';
 import { ChapterTier } from '@/lib/types';
 
@@ -13,7 +15,14 @@ const TIER_COLORS: Record<ChapterTier, { text: string; border: string; label: st
 };
 
 export default function FocusMode() {
-    const { isFocusMode, selectedChapter, setFocusMode } = useAppStore();
+    const { isFocusMode, selectedChapter, setFocusMode, isPremium, markChapterVisited } = useAppStore();
+
+    useEffect(() => {
+        if (isFocusMode && isPremium && selectedChapter) {
+            markChapterVisited(selectedChapter.id);
+            writeVisitedChapter(selectedChapter.id);
+        }
+    }, [isFocusMode, isPremium, selectedChapter, markChapterVisited]);
 
     if (!isFocusMode || !selectedChapter) return null;
 

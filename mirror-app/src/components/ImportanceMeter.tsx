@@ -37,7 +37,7 @@ const DIAGNOSES: Record<ImportanceLevel, { excess: string; technique: string }> 
     },
 };
 
-export default function ImportanceMeter({ isPremium }: { isPremium: boolean }) {
+export default function ImportanceMeter({ isPremium, onRequestUpgrade }: { isPremium: boolean; onRequestUpgrade?: () => void }) {
     const [level, setLevel] = useState<ImportanceLevel>(0);
     const [analyzed, setAnalyzed] = useState(false);
 
@@ -52,7 +52,7 @@ export default function ImportanceMeter({ isPremium }: { isPremium: boolean }) {
                 <p className="text-zinc-600 font-light text-center max-w-sm mb-6 text-sm leading-relaxed">
                     Diagnose Excess Potential and generate Balancing Force reduction techniques from Chapter 4.
                 </p>
-                <button className="px-6 py-2 border border-white/15 rounded-full text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-colors text-white/40">
+                <button onClick={onRequestUpgrade} className="px-6 py-2 border border-white/15 rounded-full text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-colors text-white/40">
                     Unlock Feature
                 </button>
             </div>
